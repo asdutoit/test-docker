@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: fastify-basic
-          image: asdutoit/fastify-basic:1.5
+          image: asdutoit/fastify-basic:1.6
           readinessProbe:
             failureThreshold: 3
             httpGet:
