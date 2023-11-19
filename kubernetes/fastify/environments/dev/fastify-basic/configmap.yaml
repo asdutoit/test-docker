@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: fastify-basic-config
+  namespace: backend
+data:
+  NODE_ENV: development
+  PORT: "3002"
+  ADDRESS: "0.0.0.0"
+  REDIS_PORT: "38450"
+  LOKI_URL: http://loki
+  LOKI_PORT: "3100"
