@@ -1,0 +1,17 @@
+Dockerfile
+README.md
+node_modules
+npm-debug.log
+.DS_Store
+.env
+*.env
+*.log
+*.tmp
+.vscode
+coverage
+tests
+grafana
+loki
+prometheus
+promtail
+kubernetes

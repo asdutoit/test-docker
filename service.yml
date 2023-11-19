@@ -1,0 +1,12 @@
+kind: Service
+apiVersion: v1
+metadata:
+  name: fastify-basic
+spec:
+  selector:
+    app: fastify-basic
+  type: ClusterIP
+  ports:
+    - name: fastify-basic
+      port: 3000
+      targetPort: 3000
