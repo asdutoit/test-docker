@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fastify-basic
-  namespace: tet
+  namespace: backend
   labels:
     app: fastify-basic
 spec:
@@ -18,7 +18,7 @@ spec:
     spec:
       containers:
         - name: fastify-basic
-          image: asdutoit/fastify-basic:1.7
+          image: asdutoit/fastify-basic:1.9
           readinessProbe:
             failureThreshold: 3
             httpGet:
@@ -28,10 +28,41 @@ spec:
           ports:
             - containerPort: 3002
               protocol: TCP
-          envFrom:
-            - configMapRef:
-                name: fastify-basic-config
-            - secretRef:
-                name: fastify-basic-secrets
+          env:
+            - name: REDIS_URL
+              valueFrom:
+                secretKeyRef:
+                  name: fastify-basic-secrets
+                  key: REDIS_URL
+            - name: REDIS_USERNAME
+              valueFrom:
+                secretKeyRef:
+                  name: fastify-basic-secrets
+                  key: REDIS_USERNAME
+            - name: REDIS_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: fastify-basic-secrets
+                  key: REDIS_PASSWORD
+            - name: REDIS_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: fastify-basic-config
+                  key: REDIS_PORT
+            - name: NODE_ENV
+              valueFrom:
+                configMapKeyRef:
+                  name: fastify-basic-config
+                  key: NODE_ENV
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: fastify-basic-config
+                  key: PORT
+            - name: ADDRESS
+              valueFrom:
+                configMapKeyRef:
+                  name: fastify-basic-config
+                  key: ADDRESS
       imagePullSecrets:
         - name: dockerconfigjson

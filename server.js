@@ -20,8 +20,8 @@ const {
   NODE_ENV = "development",
 } = process.env;
 
-console.log("LOKI URL =======>", LOKI_URL);
-console.log("LOKI PORT =======>", LOKI_PORT);
+console.log("REDIS URL =======>", REDIS_URL);
+console.log("REDIS PORT =======>", REDIS_PORT);
 
 const pinoLokiTransport = pino.transport({
   target: "pino-loki",

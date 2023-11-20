@@ -61,3 +61,4 @@ profile*
 .env
 
 docker-compose.yaml
+**/secret.yaml
