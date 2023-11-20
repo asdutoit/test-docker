@@ -25,6 +25,7 @@ spec:
               path: /healthcheck
               port: 3002
               scheme: HTTP
+            initialDelaySeconds: 10
           ports:
             - containerPort: 3002
               protocol: TCP
