@@ -59,6 +59,8 @@ profile*
 
 #environment variables
 .env
+.gitignore
 
 docker-compose.yaml
 **/secret.yaml
+**/dockerconfigjson_secret.yaml

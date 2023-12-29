@@ -1,0 +1,26 @@
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: fastify-basic-ingress
+  namespace: backend
+  annotations:
+    alb.ingress.kubernetes.io/scheme: "internet-facing"
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/healthcheck-path: "/" # Health check path
+    alb.ingress.kubernetes.io/healthcheck-interval-seconds: "30" # Health check interval
+    alb.ingress.kubernetes.io/healthcheck-timeout-seconds: "5" # Health check timeout
+    alb.ingress.kubernetes.io/healthy-threshold-count: "2" # Number of consecutive successes to be considered healthy
+    alb.ingress.kubernetes.io/unhealthy-threshold-count: "2" # Number of consecutive failures to be considered unhealthy
+spec:
+  ingressClassName: alb
+  rules:
+    - http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: fastify-basic-service
+                port:
+                  number: 3001

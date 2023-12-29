@@ -79,11 +79,15 @@ const fastify = Fastify({
   },
 });
 
-fastify.register(redis).register(metrics).register(healthcheck);
+// const fastify = Fastify({
+//   logger: "false",
+// });
+
+fastify.register(metrics).register(healthcheck).register(redis);
 
 fastify.get("/", async (request, reply) => {
-  request.log.info("Some info about the current request");
-  return { hello: "world" };
+  fastify.log.info("/ Route Reached");
+  reply.status(200).send("Hello World!");
 });
 
 fastify.get("/foo", (req, reply) => {
@@ -113,3 +117,30 @@ const start = async () => {
 };
 
 start();
+
+// ("use strict");
+
+// const fastify = require("fastify")();
+
+// const schema = {
+//   schema: {
+//     response: {
+//       200: {
+//         type: "object",
+//         properties: {
+//           hello: {
+//             type: "string",
+//           },
+//         },
+//       },
+//     },
+//   },
+// };
+
+// const fastify = Fastify();
+
+// fastify.get("/", schema, function (req, reply) {
+//   reply.send({ hello: "world" });
+// });
+
+// fastify.listen({ port: 3000, host: "127.0.0.1" });

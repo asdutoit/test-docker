@@ -5,8 +5,8 @@ metadata:
   namespace: backend
 data:
   NODE_ENV: development
-  PORT: "3002"
+  PORT: "3001"
   ADDRESS: "0.0.0.0"
   REDIS_PORT: "38450"
-  LOKI_URL: http://loki
-  LOKI_PORT: "3100"
+  LOKI_URL: http://loki-loki-distributed-gateway.observability.svc.cluster.local
+  LOKI_PORT: "80"

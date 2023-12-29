@@ -1,0 +1,17 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  name: fastify-basic
+  namespace: backend
+  labels:
+    prometheus: main
+spec:
+  selector:
+    matchLabels:
+      app: fastify-basic-monitoring
+  endpoints:
+    - port: http
+      path: /metrics
+  namespaceSelector:
+    matchNames:
+      - backend

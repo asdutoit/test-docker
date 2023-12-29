@@ -1,5 +1,5 @@
 # Stage 1: Build the application
-FROM arm64v8/node:18.18.2-slim as builder
+FROM node:18.18.2-alpine as builder
 
 WORKDIR /app
 
@@ -10,7 +10,7 @@ RUN rm -f yarn.lock *-lock.json && npm cache clean --force
 RUN npm install --production
 
 # Stage 2: Create the production image
-FROM arm64v8/node:18.18.2-slim
+FROM node:18.18.2-alpine
 
 # ENV ADDRESS=0.0.0.0 PORT=3000 REDIS_URL=172.17.0.2
 # RUN apt-get update && \
@@ -25,4 +25,7 @@ COPY --from=builder /app/node_modules ./node_modules
 
 COPY . .
 
+ENV PORT=3000
+
+EXPOSE $PORT
 CMD ["node", "server.js"]
