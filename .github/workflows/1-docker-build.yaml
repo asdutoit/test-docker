@@ -1,0 +1,36 @@
+name: Docker Build and Push Image
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+jobs:
+  build-and-push-image:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Docker Buildx
+        uses: docker/setup-buildx-action@v1
+
+      - name: Get the Git tag
+        id: get_tag
+        run: echo "::set-output name=tag::$(git describe --tags --abbrev=0)"
+
+      - name: Build and Push Docker Image
+        run: |
+          # Get the Git tag
+          version=$(/bin/bash -c "echo \${{ steps.get_tag.outputs.tag }}")
+
+          # Build and tag the docker images
+          docker buildx create --use
+          docker buildx build --platform linux/amd64,linux/arm64 -t ${{vars.DOCKER_HUB_USERNAME}}/${{vars.APP_NAME}}:$version -t ${{vars.DOCKER_HUB_USERNAME}}/${{vars.APP_NAME}}:latest .
+
+          # Log in to Docker Hub
+          echo ${{ secrets.DOCKER_HUB_PASSWORD }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
+
+          # Push the docker images
+          docker push ${{vars.DOCKER_HUB_USERNAME}}/${{vars.APP_NAME}}:$version
+          docker push ${{vars.DOCKER_HUB_USERNAME}}/${{vars.APP_NAME}}:latest
