@@ -25,11 +25,12 @@ jobs:
         run: |
           TAG=$(git describe --tags --abbrev=0 2>/dev/null) || TAG="v0.0.0"
           echo "TAG=$TAG" >> $GITHUB_ENV
+          echo "TAG=$TAG"
 
       - name: Build and Push Docker Image
         run: |
           # Get the Git tag
-          version=${{env.TAG}}
+          version=20
 
           # Build and tag the docker images
           docker buildx create --use
