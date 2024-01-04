@@ -15,14 +15,21 @@ jobs:
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
 
+      - name: GitHub Tag Name example
+        run: |
+          echo "Tag name from GITHUB_REF_NAME: $GITHUB_REF_NAME"
+          echo "Tag name from github.ref_name: ${{  github.ref_name }}"
+
       - name: Get the Git tag
         id: get_tag
-        run: echo "::set-output name=tag::$(git describe --tags --abbrev=0)"
+        run: |
+          TAG=$(git describe --tags --abbrev=0 2>/dev/null) || TAG="v0.0.0"
+          echo "TAG=$TAG" >> $GITHUB_ENV
 
       - name: Build and Push Docker Image
         run: |
           # Get the Git tag
-          version=$(/bin/bash -c "echo \${{ steps.get_tag.outputs.tag }}")
+          version=${{env.TAG}}
 
           # Build and tag the docker images
           docker buildx create --use
