@@ -44,6 +44,11 @@ jobs:
           username: ${{ secrets.DOCKER_HUB_USERNAME }}
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
+      - name: review tags
+        run: |
+          echo "tags: ${{ steps.meta.outputs.tags }}"
+          echo "labels: ${{ steps.meta.outputs.labels }}"
+
       - name: Build and Push Docker Image
         uses: docker/build-push-action@v3
         with:
@@ -52,17 +57,3 @@ jobs:
           push: true
           tags: ${{ steps.meta.outputs.tags }}
           labels: ${{ steps.meta.outputs.tags }}
-        # run: |
-        #   # Get the Git tag
-        #   version=20
-
-        #   # Build and tag the docker images
-        #   docker buildx create --use
-        #   docker buildx build --platform linux/amd64,linux/arm64 -t ${{vars.DOCKER_HUB_USERNAME}}/${{vars.APP_NAME}}:$version -t ${{vars.DOCKER_HUB_USERNAME}}/${{vars.APP_NAME}}:latest .
-
-        #   # Log in to Docker Hub
-        #   echo ${{ secrets.DOCKER_HUB_PASSWORD }} | docker login -u ${{ secrets.DOCKER_HUB_USERNAME }} --password-stdin
-
-        #   # Push the docker images
-        #   docker push ${{vars.DOCKER_HUB_USERNAME}}/${{vars.APP_NAME}}:$version
-        #   docker push ${{vars.DOCKER_HUB_USERNAME}}/${{vars.APP_NAME}}:latest
