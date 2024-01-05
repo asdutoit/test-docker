@@ -65,7 +65,8 @@ jobs:
         run: echo ${{ needs.build-and-push-image.outputs.tags }}
 
       - name: Update Kubernetes YAML files
-        run: |
-          # TAG=${{ needs.build-and-push-image.outputs.tags }}
-          TAG="1.20.6"
-          sed -i "s|image: asdutoit/fastify-basic:.*|image: asdutoit/fastify-basic:${TAG}|g" ./kubernetes/fastify/environments/dev/fastify-basic/deployment.yml
+        uses: Charlyzzz/update-k8s-image@v1.7.1
+        with:
+          manifest-path: "./kubernetes/fastify/environments/dev/fastify-basic/deployment.yml"
+          new-image-tag: "1.20.3"
+          container-name: fastify-basic
