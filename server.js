@@ -92,14 +92,19 @@ fastify.get("/", async (request, reply) => {
 
 fastify.get("/foo", (req, reply) => {
   const { redis } = fastify;
-  fastify.log.info("Redis", redis);
+  fastify.log.info("Redis Get Request '/foo'", redis);
   redis.get(req.query.key, (err, val) => {
-    reply.send(err || val);
+    if (val === "") {
+      reply.status(404).send("Not Found");
+    } else {
+      reply.send(err || val);
+    }
   });
 });
 
 fastify.post("/foo", (req, reply) => {
   const { redis } = fastify;
+  fastify.log.info("Redis Post Request '/foo'", redis);
   redis.set(req.body.key, req.body.value, (err) => {
     reply.send(err || { status: "ok" });
   });
@@ -117,30 +122,3 @@ const start = async () => {
 };
 
 start();
-
-// ("use strict");
-
-// const fastify = require("fastify")();
-
-// const schema = {
-//   schema: {
-//     response: {
-//       200: {
-//         type: "object",
-//         properties: {
-//           hello: {
-//             type: "string",
-//           },
-//         },
-//       },
-//     },
-//   },
-// };
-
-// const fastify = Fastify();
-
-// fastify.get("/", schema, function (req, reply) {
-//   reply.send({ hello: "world" });
-// });
-
-// fastify.listen({ port: 3000, host: "127.0.0.1" });
