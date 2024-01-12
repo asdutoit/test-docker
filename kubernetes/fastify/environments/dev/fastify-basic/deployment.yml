@@ -17,6 +17,15 @@ spec:
         app: fastify-basic
         prometheus: main
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: kubernetes.io/arch
+                    operator: In
+                    values:
+                      - amd64
       containers:
         - name: fastify-basic
           image: asdutoit/fastify-basic:1.20.11
@@ -32,6 +41,13 @@ spec:
               containerPort: 3001
             # - name: http-metrics
             #   containerPort: 3001
+          # resources:
+          #   requests:
+          #     memory: "512Mi"
+          #     cpu: "400m"
+          #   limits:
+          #     memory: "1024Mi"
+          #     cpu: "800m"
           env:
             - name: REDIS_URL
               valueFrom:

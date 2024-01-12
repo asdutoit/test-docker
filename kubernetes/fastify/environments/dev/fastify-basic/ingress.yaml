@@ -13,7 +13,7 @@ metadata:
     alb.ingress.kubernetes.io/healthy-threshold-count: "2" # Number of consecutive successes to be considered healthy
     alb.ingress.kubernetes.io/unhealthy-threshold-count: "2" # Number of consecutive failures to be considered unhealthy
 spec:
-  ingressClassName: alb
+  ingressClassName: nginx
   rules:
     - http:
         paths:
