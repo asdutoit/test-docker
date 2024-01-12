@@ -28,7 +28,7 @@ async function redisPlugin(fastify, opts, done) {
     fastify.register(fastifyRedis, { client: redis, closeClient: true });
     done();
   } catch (error) {
-    console.error("Redis Plugin Errordd", error);
+    console.error("Redis Plugin Error", error);
   }
 }
 

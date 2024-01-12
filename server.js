@@ -98,6 +98,7 @@ fastify
 //   reply.status(200).send("Hello World!");
 // });
 
+
 // fastify.get("/foo", (req, reply) => {
 //   const { activeSpan, tracer } = req.openTelemetry();
 //   const { redis } = fastify;
@@ -136,30 +137,3 @@ const start = async () => {
 };
 
 start();
-
-// ("use strict");
-
-// const fastify = require("fastify")();
-
-// const schema = {
-//   schema: {
-//     response: {
-//       200: {
-//         type: "object",
-//         properties: {
-//           hello: {
-//             type: "string",
-//           },
-//         },
-//       },
-//     },
-//   },
-// };
-
-// const fastify = Fastify();
-
-// fastify.get("/", schema, function (req, reply) {
-//   reply.send({ hello: "world" });
-// });
-
-// fastify.listen({ port: 3000, host: "127.0.0.1" });
