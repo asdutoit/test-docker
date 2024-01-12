@@ -8,7 +8,7 @@ new_version=$1
 echo "new version: $new_version"
 
 # Simulate release of the new docker images
-docker tag fastify-basic:latest asdutoit/fastify-basic:$new_version
+docker tag asdutoit/fastify-basic asdutoit/fastify-basic:$new_version
 
 # Push new version to dockerhub
 docker push asdutoit/fastify-basic:$new_version
